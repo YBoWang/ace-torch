@@ -1,0 +1,85 @@
+# environment
+task: humanoid-run
+modality: 'state'
+action_repeat: ???
+discount: 0.99
+episode_length: 1000/${action_repeat}
+train_steps: 500000/${action_repeat}
+
+# planning
+horizon: 6
+iterations: 6
+min_std: 0.05
+init_std: 0.5
+temperature: 0.5
+momentum: 0.1
+mixture_coef: 0.5
+num_samples: 256
+num_elites: 32
+
+# icem
+noise_beta: 2.5
+factor_decrease_num: 1.25
+shift_elites_over_time: true
+fraction_elites_reused: 0.25
+keep_previous_elites: true
+
+# learning
+batch_size: 512
+max_buffer_size: 1000000
+reward_coef: 0.5
+value_coef: 0.1
+similarity_coef: 1.0
+kappa: 0.1
+per_alpha: 0.6
+per_beta: 0.4
+grad_clip_norm: 10
+update_freq: 2
+tau: 0.01
+std_schedule: linear(0.5, ${min_std}, 25000, 0)
+horizon_schedule: linear(2, ${horizon}, 25000, 0)
+explore_schedule: linear(0, ${intrinsic_reward_coef}, ${expl_growth}, ${expl_warmup})
+regularization_schedule: linear(0.05, ${mixture_coef}, 1, 5000)
+seed_steps: 5000
+expl_warmup: 5000
+expl_growth: 5000
+pure_intrinsic_reward: false
+expl_temp: 0.6
+rho: 0.5
+td_lambda: 0.0
+intrinsic_reward_coef: 0.25
+alpha_bc: 0.1
+
+# optim
+lr: 1e-3
+pi_lr: 1e-3
+optim_id: 'adamw'
+weight_decay: 0.0
+
+# architecture
+enc_dim: 256
+mlp_dim: 512
+latent_dim: 50
+hidden_dim: 128
+norm_cell: true
+
+# wandb (insert your own)
+use_wandb: true
+wandb_project: xx
+wandb_entity: xx
+wandb_exp_name: default
+
+# mis
+seed: 98
+train_interval: 1
+exp_name: default
+eval_freq: 20000
+eval_freq_episodes: 20
+eval_episodes: 10
+save_video: false
+save_model: true
+device: 'cuda'
+normalize: true
+norm_type: 'ln'
+model_path: 'models/model.pt'  #checkpoint_1000
+save_interval: 200 # count in epoch

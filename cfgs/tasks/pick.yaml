@@ -1,0 +1,31 @@
+action_repeat: 2
+episode_length: 100/${action_repeat}
+train_steps: 200000/${action_repeat}
+min_std: 0.05
+
+iterations: 6
+num_samples: 256 # 256 for icem, 512 default
+num_elites: 32
+
+goal_dim: 0
+alpha_bc: 0.0
+her: true
+
+seed: 0
+model_path: 'models/checkpoint_1000.pt'  # checkpoint_2000
+wandb_exp_name: default
+noise_beta: 2.5
+intrinsic_reward_coef: 0.5
+rho: 0.5
+td_lambda: 0.8
+train_interval: 10
+horizon: 6
+std_schedule: linear(0.5, ${min_std}, 10000, 2000)  # duration 25000 train step
+horizon_schedule: linear(2, ${horizon}, 10000, 2000)
+explore_schedule: linear(0, ${intrinsic_reward_coef}, 2000, 2000)
+expl_temp: 0.6
+
+save_interval: 200 # count in epoch
+eval_freq_episodes: 50
+seed_steps: 2000
+warmup_steps: 4000

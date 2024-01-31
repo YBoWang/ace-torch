@@ -1,0 +1,38 @@
+action_repeat: 2
+episode_length: 200/${action_repeat}
+train_steps: 200000/${action_repeat}
+min_std: 0.05
+
+iterations: 6
+num_samples: 700 # 256 for icem, 512 default
+num_elites: 32
+
+seed: 0
+wandb_exp_name: default
+noise_beta: 2.5
+rho: 0.5
+td_lambda: 0.2
+train_interval: 5
+intrinsic_reward_coef: 0.5
+mixture_coef: 0.5
+init_std: 0.5
+goal_dim: 0
+her: true
+latent_dim: 100
+
+horizon: 7
+std_schedule: linear(0.5, ${min_std}, 10000, 2000)  # duration 25000 train step
+horizon_schedule: linear(2, ${horizon}, 10000, 2000)
+regularization_schedule: linear(0.05, ${mixture_coef}, 1, 2000)
+explore_schedule: linear(0, ${intrinsic_reward_coef}, 2000, 2000)
+
+# reset q
+reset_q: false
+reset_interval: 500
+q_tau: 0.8
+q_lr: 1e-3
+alpha_bc: 0.0
+
+save_interval: 200 # count in epoch
+eval_freq_episodes: 25
+seed_steps: 2000

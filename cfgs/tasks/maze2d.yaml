@@ -1,0 +1,26 @@
+action_repeat: 2
+episode_length: 600/${action_repeat}  # (250, 600)
+train_steps: 120000/${action_repeat}  # (125000, 120000)
+min_std: 0.05
+noise_beta: 2.5
+
+iterations: 6
+num_samples: 256 # 256 for icem, 512 default
+num_elites: 32
+
+seed: 0
+wandb_exp_name: default
+expl_temp: 0.6
+td_lambda: 0.2
+rho: 0.5
+intrinsic_reward_coef: 0.5
+horizon: 6
+std_schedule: linear(0.5, ${min_std}, 30000, 0)
+horizon_schedule: linear(2, ${horizon}, 30000, 0)
+explore_schedule: linear(0, ${intrinsic_reward_coef}, 3000, 3000)
+regularization_schedule: linear(0.05, ${mixture_coef}, 1, 3000)
+pure_intrinsic_reward: true
+
+eval_freq: 6000  # (5000, 12000)
+seed_steps: 3000  # (2500, 6000)
+save_interval: 10  # counted in episode

@@ -1,0 +1,16 @@
+train_steps: 500000/${action_repeat}
+action_repeat: 2
+
+wandb_exp_name: default
+seed: 0
+intrinsic_reward_coef: 0.25
+explore_schedule: linear(0, ${intrinsic_reward_coef}, 30000, 5000)
+rho: 0.5
+latent_dim: 100
+noise_beta: 0.5
+td_lambda: 0.2
+iterations: 6
+num_samples: 256 # 256 for icem, 512 default
+num_elites: 32
+horizon: 6
+alpha_bc: 0.0
